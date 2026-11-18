@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.excelr.ExcelrSeptSpringboot.entity.Player;
+import com.excelr.ExcelrSeptSpringboot.exception.PlayerNotFoundException;
 import com.excelr.ExcelrSeptSpringboot.repository.PlayerRepository;
 
 @Service
@@ -21,8 +22,11 @@ public class PlayerService {
 
 	public Player savePlayer1(Player p1) 
 	{
-
 		return playerRepository.save(p1);
 	}
 
+	public void savePlayer2(Player p1)throws PlayerNotFoundException {
+		playerRepository.save(p1);
+		
+	}
 }
