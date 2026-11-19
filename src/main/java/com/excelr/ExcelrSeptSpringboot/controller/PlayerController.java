@@ -3,6 +3,7 @@ package com.excelr.ExcelrSeptSpringboot.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -146,6 +147,13 @@ public class PlayerController {
 		Player player=playerService.savePlayer1(p1);
 		return player;
 	}
+	
+	@PostMapping("/savePlayerUsingRequestBody")
+	public Player savePlayerUsingRequestBody(@RequestBody Player p1)
+	{
+		Player player=playerService.savePlayer1(p1);
+		return player;
+	}
 }
 
 //Operation      HttpMethod       Mapping           Postman
@@ -153,3 +161,11 @@ public class PlayerController {
 //Read           Get              @GetMapping
 //Update         Put              @PutMapping
 //Delete         Delete           @DeleteMapping
+
+/*
+{
+    "playerName": "Frank",
+    "matchesPlayed": 30,
+    "runsScored": 500
+} 
+*/
