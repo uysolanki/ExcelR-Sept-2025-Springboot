@@ -1,5 +1,7 @@
 package com.excelr.ExcelrSeptSpringboot.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +32,17 @@ public class PlayerService {
 		
 	}
 
-	public Player savePlayer3(Player p1) {
-		// TODO Auto-generated method stub
-		return null;
+	
+
+	public List<Player> getAllPlayers() {
+		return playerRepository.findAll();
+	}
+
+	public Player getSinglePlayer(int pid) throws PlayerNotFoundException {
+		if(!playerRepository.existsById(pid))
+			throw new PlayerNotFoundException("Player with Jersey No "+pid+ " does not exist");
+		return playerRepository.findById(pid).get();
+		
+		
 	}
 }
