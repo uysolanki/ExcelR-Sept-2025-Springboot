@@ -29,4 +29,9 @@ public class PlayerService {
 		playerRepository.save(p1);
 		
 	}
+
+	public Player savePlayer3(Player p1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

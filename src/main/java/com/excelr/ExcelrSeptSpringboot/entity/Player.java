@@ -30,7 +30,4 @@ public class Player {
 	private String playerName;
 	private int matchesPlayed;
 	private int runsScored;
-	
-	@Transient
-	private int x;
 }

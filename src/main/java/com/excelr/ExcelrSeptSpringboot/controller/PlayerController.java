@@ -1,7 +1,10 @@
 package com.excelr.ExcelrSeptSpringboot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.excelr.ExcelrSeptSpringboot.entity.Player;
@@ -54,7 +57,7 @@ public class PlayerController {
 		
 	}
 	
-	@RequestMapping("/savePlayer3")
+	@PostMapping("/savePlayer3")
 	public String savePlayer3()
 	{
 		Player p1=new Player();
@@ -72,4 +75,81 @@ public class PlayerController {
 		}
 		
 	}
+	
+	@PostMapping("/savePlayerUsingRequestParam")
+	public Player savePlayerUsingRequestParam(
+			@RequestParam("a") int mp,
+			@RequestParam("b") String pname,
+			@RequestParam("c") int rs)
+	{
+		Player p1=new Player();
+		p1.setMatchesPlayed(mp);
+		p1.setPlayerName(pname);
+		p1.setRunsScored(rs);
+		Player player=playerService.savePlayer1(p1);
+		return player;
+	}
+	
+	
+	@PostMapping("/savePlayerUsingRequestParam1")
+	public Player savePlayerUsingRequestParam1(
+			@RequestParam("matchesPlayed") int matchesPlayed,
+			@RequestParam("playerName") String playerName,
+			@RequestParam("runsScored") int runsScored)
+	{
+		Player p1=new Player();
+		p1.setMatchesPlayed(matchesPlayed);
+		p1.setPlayerName(playerName);
+		p1.setRunsScored(runsScored);
+		Player player=playerService.savePlayer1(p1);
+		return player;
+	}
+	
+	@PostMapping("/savePlayerUsingRequestParam2")
+	public Player savePlayerUsingRequestParam2(
+			@RequestParam int matchesPlayed,
+			@RequestParam String playerName,
+			@RequestParam int runsScored)
+	{
+		Player p1=new Player();
+		p1.setMatchesPlayed(matchesPlayed);
+		p1.setPlayerName(playerName);
+		p1.setRunsScored(runsScored);
+		Player player=playerService.savePlayer1(p1);
+		return player;
+	}
+	
+	@PostMapping("/savePlayerUsingPathVariable/{a}/{b}/{c}")
+	public Player savePlayerUsingPathVariable(
+			@PathVariable("a") int matchesPlayed,
+			@PathVariable("b") String playerName,
+			@PathVariable("c") int runsScored)
+	{
+		Player p1=new Player();
+		p1.setMatchesPlayed(matchesPlayed);
+		p1.setPlayerName(playerName);
+		p1.setRunsScored(runsScored);
+		Player player=playerService.savePlayer1(p1);
+		return player;
+	}
+	
+	@PostMapping("/savePlayerUsingPathVariable1/{matchesPlayed}/{playerName}/{runsScored}")
+	public Player savePlayerUsingPathVariable1(
+			@PathVariable int matchesPlayed,
+			@PathVariable String playerName,
+			@PathVariable int runsScored)
+	{
+		Player p1=new Player();
+		p1.setMatchesPlayed(matchesPlayed);
+		p1.setPlayerName(playerName);
+		p1.setRunsScored(runsScored);
+		Player player=playerService.savePlayer1(p1);
+		return player;
+	}
 }
+
+//Operation      HttpMethod       Mapping           Postman
+//Create         Post             @PostMapping
+//Read           Get              @GetMapping
+//Update         Put              @PutMapping
+//Delete         Delete           @DeleteMapping
