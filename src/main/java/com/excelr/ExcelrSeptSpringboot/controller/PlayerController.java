@@ -4,16 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.excelr.ExcelrSeptSpringboot.dto.PlayerDTO;
 import com.excelr.ExcelrSeptSpringboot.entity.Player;
 import com.excelr.ExcelrSeptSpringboot.exception.PlayerNotFoundException;
 import com.excelr.ExcelrSeptSpringboot.service.PlayerService;
@@ -27,7 +29,7 @@ public class PlayerController {
 	@RequestMapping("/savePlayer")
 	public String savePlayer()
 	{
-		Player p1=new Player(77,"Shubman", 20,800);
+		Player p1=new Player(77,"Shubman", 20,800,"India");
 		try
 		{
 		playerService.savePlayer(p1);
@@ -43,7 +45,7 @@ public class PlayerController {
 	@RequestMapping("/savePlayer1")
 	public Player savePlayer1()
 	{
-		Player p1=new Player(18,"Virat", 100,5000);
+		Player p1=new Player(18,"Virat", 100,5000,"India");
 		return playerService.savePlayer1(p1);
 		 
 	}
@@ -51,7 +53,7 @@ public class PlayerController {
 	@RequestMapping("/savePlayer2")
 	public String savePlayer2()
 	{
-		Player p1=new Player(33,"Hardik", 50,1200);
+		Player p1=new Player(33,"Hardik", 50,1200,"India");
 		try
 		{
 		playerService.savePlayer2(p1);
@@ -197,6 +199,26 @@ public class PlayerController {
 		return new ResponseEntity<Player>(playerService.savePlayer1(p1),HttpStatus.CREATED);
 	}
 	
+	@PostMapping("/savePlayerUsingDTO")
+	public ResponseEntity<PlayerDTO> savePlayerUsingRequestBodyRE(@RequestBody PlayerDTO playerDto)
+	{
+		//Player player=playerService.savePlayer1(p1);
+		return new ResponseEntity<PlayerDTO>(playerService.savePlayerUsingDTO(playerDto),HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/saveMultiplePlayerUsingRequestBodyRE")
+	public ResponseEntity<List<Player>> saveMultiplePlayerUsingRequestBodyRE(@RequestBody List<Player> players)
+	{
+		//Player player=playerService.savePlayer1(p1);
+		return new ResponseEntity<List<Player>>(playerService. saveMultiplePlayer(players),HttpStatus.CREATED);
+	}
+	
+	
+	@PostMapping("/saveMultiplePlayerUsingDTO")
+	public ResponseEntity<List<PlayerDTO>> saveMultiplePlayerUsingDTO(@RequestBody List<PlayerDTO> listPlayersDTO)
+	{
+		return new ResponseEntity<List<PlayerDTO>>(playerService.saveMultiplePlayerUsingDTO(listPlayersDTO),HttpStatus.CREATED);
+	}
 	@GetMapping("/getAllPlayers")
 	public List<Player> getAllPlayers()
 	{
@@ -223,6 +245,42 @@ public class PlayerController {
 		{
 			return new ResponseEntity<String>( ex.getMessage(),HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@DeleteMapping("/deleteSinglePlayer/{pid}")
+	public ResponseEntity<?> deleteSinglePlayer(@PathVariable int pid)
+	{
+		try
+		{
+		playerService.deleteSinglePlayer(pid);
+		return new ResponseEntity<String>("Record with ID "+pid+ " Deleted" , HttpStatus.OK);
+		}
+		catch(PlayerNotFoundException ex)
+		{
+			return new ResponseEntity<String>( ex.getMessage(),HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
+	@GetMapping("/getPlayersByCountryName/{country}")
+	public ResponseEntity<List<Player>> getPlayersByCountryName(@PathVariable String country)
+	{
+		List<Player> players=playerService.getPlayersByCountryName(country);
+		return new  ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getPlayersByMatchesPlayed/{matches}")
+	public ResponseEntity<List<Player>> getPlayersByMatchesPlayed(@PathVariable int matches)
+	{
+		List<Player> players=playerService.getPlayersByMatchesPlayed(matches);
+		return new  ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+	
+	@PutMapping("/updatePlayer/{playerId}")
+	public ResponseEntity<Player> updatePlayer(@PathVariable int playerId, @RequestBody Player newPlayerValues)
+	{
+		Player player=playerService.updatePlayer(playerId,newPlayerValues);
+		return new  ResponseEntity<Player>(player,HttpStatus.OK);
 	}
 }
 
