@@ -12,7 +12,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class APIError {
+	private String defaultMessage;
 	private String field;
 	private Object rejectedValue;
-	private String defaultMessage;
+	
 }

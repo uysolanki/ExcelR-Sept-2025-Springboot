@@ -1,10 +1,13 @@
 package com.excelr.ExcelrSeptSpringboot.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.excelr.ExcelrSeptSpringboot.dto.PlayerDTO;
 import com.excelr.ExcelrSeptSpringboot.entity.Player;
+import com.excelr.ExcelrSeptSpringboot.exception.APIError;
 import com.excelr.ExcelrSeptSpringboot.exception.PlayerNotFoundException;
 import com.excelr.ExcelrSeptSpringboot.service.PlayerService;
 
@@ -209,13 +213,27 @@ public class PlayerController {
 	}
 	
 	@PostMapping("/savePlayerUsingDTOAndValidation")
-	public ResponseEntity<PlayerDTO> savePlayerUsingDTOAndValidation(@Valid @RequestBody PlayerDTO playerDto)
+	public ResponseEntity<?> savePlayerUsingDTOAndValidation(@Valid @RequestBody PlayerDTO playerDto, BindingResult bindingResult)
 	{
-		try
-		{
+		if (bindingResult.hasErrors()) 
+	 	{
+		List<APIError> errors = new ArrayList<>();
+		for (FieldError error : bindingResult.getFieldErrors()) 
+			{
+			APIError apiError = new APIError(error.getDefaultMessage(), error.getField(), error.getRejectedValue());
+			errors.add(apiError);
+			}
+				 
+		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+	}
 		return new ResponseEntity<PlayerDTO>(playerService.savePlayerUsingDTO(playerDto),HttpStatus.CREATED);
-		}
-		catch()
+	}
+	
+	
+	@PostMapping("/savePlayerUsingDTOAndValidationUsingGEH")
+	public ResponseEntity<?> savePlayerUsingDTOAndValidationUsingGEH(@Valid @RequestBody PlayerDTO playerDto)
+	{
+		return new ResponseEntity<PlayerDTO>(playerService.savePlayerUsingDTO(playerDto),HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/saveMultiplePlayerUsingRequestBodyRE")
@@ -257,6 +275,14 @@ public class PlayerController {
 		{
 			return new ResponseEntity<String>( ex.getMessage(),HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	
+	@GetMapping("/getSinglePlayerByGEH/{pid}")
+	public ResponseEntity<?> getSinglePlayerByGEH(@PathVariable int pid)
+	{
+		Player player=playerService. getSinglePlayer(pid);
+		return new ResponseEntity<Player>(player, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteSinglePlayer/{pid}")

@@ -23,7 +23,7 @@ public class PlayerDTO {
 	@Min(value = 1, message = "Matches Played must be at least 1")
 	private int matchesPlayed;
 	
-	@Min(value = 1, message = "Matches Played must be at least 1")
+	@Min(value = 1, message = "Runs Scored must be at least 1")
 	private int runsScored;
 	
 	@NotBlank
