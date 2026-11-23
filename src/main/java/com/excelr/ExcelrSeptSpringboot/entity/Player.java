@@ -26,12 +26,18 @@ public class Player {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	@Column(name = "jno")
 	private Integer jerseyNumber;
+	
+	@Column(nullable = false, length = 100)
 	private String playerName;
+	
+	@Column(nullable = false)
 	private int matchesPlayed;
+	
+	@Column(nullable = false)
 	private int runsScored;
+	
+	@Column(nullable = false)
 	private String country;
 	
 	

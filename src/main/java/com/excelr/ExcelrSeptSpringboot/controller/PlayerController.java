@@ -20,6 +20,8 @@ import com.excelr.ExcelrSeptSpringboot.entity.Player;
 import com.excelr.ExcelrSeptSpringboot.exception.PlayerNotFoundException;
 import com.excelr.ExcelrSeptSpringboot.service.PlayerService;
 
+import jakarta.validation.Valid;
+
 @RestController    //Component
 public class PlayerController {
 
@@ -204,6 +206,16 @@ public class PlayerController {
 	{
 		//Player player=playerService.savePlayer1(p1);
 		return new ResponseEntity<PlayerDTO>(playerService.savePlayerUsingDTO(playerDto),HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/savePlayerUsingDTOAndValidation")
+	public ResponseEntity<PlayerDTO> savePlayerUsingDTOAndValidation(@Valid @RequestBody PlayerDTO playerDto)
+	{
+		try
+		{
+		return new ResponseEntity<PlayerDTO>(playerService.savePlayerUsingDTO(playerDto),HttpStatus.CREATED);
+		}
+		catch()
 	}
 	
 	@PostMapping("/saveMultiplePlayerUsingRequestBodyRE")
