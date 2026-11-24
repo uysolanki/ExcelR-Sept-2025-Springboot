@@ -8,6 +8,7 @@
 <body>
 <div class="container mt-5">
 	
+    <td><a th:href="@{'/addPlayerForm'}" class="btn btn-primary btn-sm" > Add New Player </a> 
     
     <h2 class="mb-4">List of Products</h2>
     <table class="table table-bordered table-striped">
@@ -19,6 +20,7 @@
             <th>Country</th>
             <th>Photo</th>
             <th>Delete</th>
+            <th>Update</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +39,8 @@
             
            <td><a th:href="@{'/deletePlayerFE/' + ${player.jerseyNumber}}" class="btn btn-danger btn-sm" 
                onclick="return confirm('Are you sure you want to delete this Player?');"> Delete </a> </td>
+               
+  <td><a th:href="@{'/updatePlayerFormFE/' + ${player.jerseyNumber}}" class="btn btn-secondary btn-sm"> Update </a> </td>
             
         </tr>
         </tbody>

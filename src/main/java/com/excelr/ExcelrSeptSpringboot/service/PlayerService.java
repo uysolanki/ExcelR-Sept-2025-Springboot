@@ -111,4 +111,21 @@ public class PlayerService {
 		
 		return  listPDTOs;
 	}
+
+	public PlayerDTO getSinglePlayerDTO(int pid) {
+		Player playerStoredInDB=playerRepository.findById(pid).get();
+		PlayerDTO pDto=modelMapper.map(playerStoredInDB, PlayerDTO.class);
+		return pDto;
+	}
+
+	public void updatePlayerDTO(int pid, PlayerDTO newPlayerValues) {
+		Player playerFromDB=getSinglePlayer(pid);
+		playerFromDB.setCountry(newPlayerValues.getCountry());
+		playerFromDB.setMatchesPlayed(newPlayerValues.getMatchesPlayed());
+		playerFromDB.setPlayerName(newPlayerValues.getPlayerName());
+		playerFromDB.setRunsScored(newPlayerValues.getRunsScored());
+		playerFromDB.setImage(newPlayerValues.getImage());
+		playerRepository.save(playerFromDB);
+		
+	}
 }

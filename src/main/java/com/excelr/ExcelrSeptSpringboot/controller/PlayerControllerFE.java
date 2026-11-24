@@ -59,5 +59,20 @@ public class PlayerControllerFE {
 		return "redirect:/showAllPlayers";
 	}
 	
+	
+	@RequestMapping("/updatePlayerFormFE/{pid}")
+	public String updatePlayerFormFE(@PathVariable int pid,Model model)
+	{
+		PlayerDTO player= playerService.getSinglePlayerDTO(pid);
+		model.addAttribute("player",player);
+		return "update-player-form";
+	}
+	
+	@PostMapping("/updatePlayerFE/{pid}")
+	public String updatePlayerFE(@PathVariable int pid,@ModelAttribute PlayerDTO player)
+	{
+		playerService.updatePlayerDTO(pid,player);
+		return "redirect:/showAllPlayers";
+	}
 
 }
