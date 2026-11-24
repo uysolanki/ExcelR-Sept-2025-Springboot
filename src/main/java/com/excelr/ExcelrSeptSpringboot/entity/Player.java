@@ -40,6 +40,9 @@ public class Player {
 	@Column(nullable = false)
 	private String country;
 	
+	@Column(nullable = false)
+	private String image;
+	
 	
 	private LocalDateTime createdAt;
 	

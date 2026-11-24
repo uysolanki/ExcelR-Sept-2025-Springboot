@@ -102,4 +102,13 @@ public class PlayerService {
 		
 		return  listPDTOs;
 	}
+
+	public List<PlayerDTO> getAllPlayersFE() {
+		
+		List<Player> listSavedPlayers=playerRepository.findAll();
+		List<PlayerDTO> listPDTOs=listSavedPlayers.stream()
+				.map(entity->modelMapper.map(entity, PlayerDTO.class)).toList();
+		
+		return  listPDTOs;
+	}
 }

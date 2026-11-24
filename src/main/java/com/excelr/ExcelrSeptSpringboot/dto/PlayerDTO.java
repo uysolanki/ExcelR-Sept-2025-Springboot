@@ -16,6 +16,8 @@ import lombok.ToString;
 @ToString
 public class PlayerDTO {
 
+	private Integer jerseyNumber;
+	
 	@NotBlank
 	@Size(min = 5, max = 100, message = "Player name must be between 5 and 100 characters")
 	private String playerName;
@@ -29,5 +31,8 @@ public class PlayerDTO {
 	@NotBlank
 	@Size(min = 2, max = 30, message = "Country name must be between 5 and 30 characters")
 	private String country;
+	
+	@NotBlank
+	private String image;
 
 }
