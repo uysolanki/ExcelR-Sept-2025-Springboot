@@ -22,7 +22,7 @@ public class MyAppSecurity2 {
     }
 
     
-    //Authorisation
+        //Authorisation
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -73,7 +73,6 @@ public class MyAppSecurity2 {
 		dao.setPasswordEncoder(passwordEncoder());
 		return dao;
 	}
-
 
     @Bean
     public UserDetailsService mySetUserDetailsService() {
