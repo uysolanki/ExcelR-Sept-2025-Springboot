@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/excelrsept2026springbootdb-test
+    password: Wipro@123
+  security:
+    user:
+      name: tom
+      password: jerry
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+server:
+  port: '8088'
